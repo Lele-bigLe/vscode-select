@@ -1,0 +1,67 @@
+{
+  "name": "vscode-select",
+  "displayName": "代码引用复制",
+  "description": "快速复制文件引用、行号引用和行范围引用",
+  "version": "0.0.1",
+  "publisher": "local",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "vscode-select.copyFileReference",
+        "title": "复制文件引用 (@文件名)"
+      },
+      {
+        "command": "vscode-select.copyLineReference",
+        "title": "复制行引用 (@文件名#行号)"
+      },
+      {
+        "command": "vscode-select.copyRangeReference",
+        "title": "复制范围引用 (@文件名#起始行-结束行)"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "command": "vscode-select.copyFileReference",
+          "group": "9_cutcopypaste",
+          "when": "editorTextFocus"
+        },
+        {
+          "command": "vscode-select.copyLineReference",
+          "group": "9_cutcopypaste",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "vscode-select.copyRangeReference",
+          "group": "9_cutcopypaste",
+          "when": "editorHasSelection"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.80.0",
+    "@types/node": "16.x",
+    "@typescript-eslint/eslint-plugin": "^5.59.0",
+    "@typescript-eslint/parser": "^5.59.0",
+    "eslint": "^8.41.0",
+    "typescript": "^5.0.4"
+  }
+}
