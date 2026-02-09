@@ -4,6 +4,10 @@
   "description": "快速复制文件引用、行号引用和行范围引用",
   "version": "0.0.1",
   "publisher": "local",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Lele-bigLe/vscode-select.git"
+  },
   "engines": {
     "vscode": "^1.80.0"
   },
