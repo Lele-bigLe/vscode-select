@@ -21,6 +21,10 @@
         "title": "复制文件引用 (@文件名)"
       },
       {
+        "command": "vscode-select.copyFolderReference",
+        "title": "复制文件夹引用"
+      },
+      {
         "command": "vscode-select.copyLineReference",
         "title": "复制行引用 (@文件名#行号)"
       },
@@ -45,6 +49,18 @@
           "command": "vscode-select.copyRangeReference",
           "group": "9_cutcopypaste",
           "when": "editorHasSelection"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "vscode-select.copyFileReference",
+          "group": "9_cutcopypaste",
+          "when": "!explorerResourceIsFolder"
+        },
+        {
+          "command": "vscode-select.copyFolderReference",
+          "group": "9_cutcopypaste",
+          "when": "explorerResourceIsFolder"
         }
       ]
     }
