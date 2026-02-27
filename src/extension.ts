@@ -27,30 +27,25 @@ export function activate(context: vscode.ExtensionContext) {
     'vscode-select.copyFileReference',
     (uri?: vscode.Uri) => {
       let filePath: string | undefined;
-      let useRelativePath = false;
 
-      // 从资源管理器触发（传入 URI）- 使用相对路径
+      // 从资源管理器触发（传入 URI）
       if (uri) {
         filePath = uri.fsPath;
-        useRelativePath = true;
       }
-      // 从编辑器触发 - 使用文件名
+      // 从编辑器触发
       else {
         const editor = vscode.window.activeTextEditor;
         if (!editor) {
           return;
         }
         filePath = editor.document.fileName;
-        useRelativePath = false;
       }
 
       if (!filePath) {
         return;
       }
 
-      const reference = useRelativePath
-        ? `@${getRelativePath(filePath)}`
-        : `@${path.basename(filePath)}`;
+      const reference = `@${getRelativePath(filePath)}`;
 
       vscode.env.clipboard.writeText(reference);
       vscode.window.showInformationMessage(`已复制: ${reference}`);
@@ -84,11 +79,11 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       const selection = editor.selection;
-      const fileName = path.basename(editor.document.fileName);
+      const relPath = getRelativePath(editor.document.fileName);
 
       // 如果选中多行，使用起始行
       const lineNumber = selection.start.line + 1;
-      const reference = `@${fileName}#${lineNumber}`;
+      const reference = `@${relPath}#${lineNumber}`;
 
       vscode.env.clipboard.writeText(reference);
       vscode.window.showInformationMessage(`已复制: ${reference}`);
@@ -105,18 +100,18 @@ export function activate(context: vscode.ExtensionContext) {
       }
 
       const selection = editor.selection;
-      const fileName = path.basename(editor.document.fileName);
+      const relPath = getRelativePath(editor.document.fileName);
 
       const startLine = selection.start.line + 1;
       const endLine = selection.end.line + 1;
 
       // 如果只选中一行，使用行引用格式
       if (startLine === endLine) {
-        const reference = `@${fileName}#${startLine}`;
+        const reference = `@${relPath}#${startLine}`;
         vscode.env.clipboard.writeText(reference);
         vscode.window.showInformationMessage(`已复制: ${reference}`);
       } else {
-        const reference = `@${fileName}#${startLine}-${endLine}`;
+        const reference = `@${relPath}#${startLine}-${endLine}`;
         vscode.env.clipboard.writeText(reference);
         vscode.window.showInformationMessage(`已复制: ${reference}`);
       }
